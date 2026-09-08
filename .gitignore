@@ -1,0 +1,5 @@
+.vercel
+.DS_Store
+scripts/node_modules
+scripts/src
+src

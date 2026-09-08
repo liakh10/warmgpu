@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script src="config.js"></script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Warm GPU Docs</title>
+<meta name="description" content="Field manual for Warm GPU, every GPU has a cat on it" />
+<link rel="icon" type="image/png" href="assets/favicon.png" />
+<link rel="apple-touch-icon" href="assets/apple-icon.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+:root{--bg:#06101d;--bg-2:#0b1a2c;--cyan:#46c8ff;--orange:#ff8a3d;--white:#eaf3ff;--dim:#6f8aa8;--line:rgba(70,200,255,.22);
+  --disp:"Space Grotesk",system-ui,sans-serif;--type:"IBM Plex Mono",ui-monospace,monospace;--pad:clamp(16px,3vw,40px)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{background:var(--bg);color:var(--white);font-family:var(--type);font-size:13.5px;-webkit-font-smoothing:antialiased;background-image:repeating-linear-gradient(rgba(0,0,0,.18) 0 1px,transparent 1px 3px)}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+.top{position:sticky;top:0;z-index:10;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px var(--pad);background:rgba(6,16,29,.9);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--disp);font-weight:700;font-size:15px}
+.brand img{width:28px;height:28px;border-radius:50%}
+.brand small{font-family:var(--type);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
+.top nav{display:flex;gap:6px}
+.btn{height:34px;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:0 13px;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--line);background:rgba(6,16,29,.6);color:var(--white)}
+.btn svg{width:13px;height:13px}
+.btn.buy{background:var(--orange);color:#1a0a02;border-color:var(--orange);font-weight:500}
+.btn.crumb{border-color:var(--cyan);color:var(--cyan)}
+.shell{display:grid;grid-template-columns:230px minmax(0,1fr);gap:clamp(20px,4vw,56px);width:min(1080px,100%);margin:0 auto;padding:34px var(--pad) 80px;min-width:0}
+.side{position:sticky;top:78px;align-self:start;display:flex;flex-direction:column;gap:2px}
+.kick{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--cyan);margin-bottom:10px}
+.side a{font-size:12.5px;padding:6px 10px;color:var(--dim);border-left:2px solid transparent}
+.side a:hover{color:var(--white)}
+.side a.on{color:var(--white);border-left-color:var(--orange);background:rgba(70,200,255,.06)}
+.hero{margin-bottom:24px}
+.hero h1{font-family:var(--disp);font-weight:700;font-size:clamp(30px,4.6vw,52px);line-height:1;letter-spacing:-.02em}
+.hero h1 em{font-style:normal;color:var(--orange)}
+.hero p{margin-top:12px;font-size:13.5px;line-height:1.55;max-width:60ch;white-space:pre-line;color:var(--white)}
+.sec{background:var(--bg-2);padding:clamp(16px,2.6vw,26px);margin-bottom:16px;border:1px solid var(--line)}
+.sec h2{font-family:var(--disp);font-weight:700;font-size:clamp(18px,2.2vw,24px);line-height:1.1;margin-bottom:12px}
+.sec h2 i{font-style:normal;font-family:var(--type);font-size:10px;letter-spacing:.24em;color:var(--cyan);display:block;margin-bottom:6px}
+.sec p{font-size:13.5px;line-height:1.6;max-width:68ch}
+.sec p + p{margin-top:8px}
+.rows{display:grid;margin-top:12px;border-top:1px solid var(--line)}
+.row{display:grid;grid-template-columns:160px 1fr;gap:12px;padding:9px 0;border-bottom:1px solid var(--line);font-size:13px;line-height:1.5}
+.row dt{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);padding-top:4px}
+.tree{margin-top:12px;font-size:12.5px;line-height:1.6;white-space:pre;overflow-x:auto;padding:12px 14px;background:#020810;border:1px solid var(--line)}
+.tree b{color:var(--orange);font-weight:500}
+.kbd{display:inline-block;font-size:11px;padding:2px 7px;border:1px solid var(--line);color:var(--cyan);margin:0 2px}
+.ca{display:grid;justify-items:center;gap:6px;max-width:100%;padding:12px 14px;margin-top:12px;background:#020810;border:1px solid var(--line);cursor:pointer}
+.ca small{font-size:10px;letter-spacing:.24em;color:var(--cyan);white-space:nowrap}
+.ca b{font-family:var(--disp);font-weight:700;font-size:20px;white-space:nowrap;max-width:100%;color:var(--orange)}
+.ca.live b{font-family:var(--type);font-weight:500;font-size:clamp(9.5px,2.5vw,13px)}
+.ca .copy{display:inline-block;font:inherit;font-size:10.5px;letter-spacing:.14em;padding:5px 11px;background:transparent;color:var(--white);border:1px dashed rgba(234,243,255,.4);cursor:pointer}
+.ca.live{box-shadow:0 0 0 2px var(--orange)}
+.ca.live .copy{border-style:solid;border-color:var(--orange);color:var(--orange)}
+.links{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}
+.faq{display:grid;gap:8px;margin-top:10px}
+.faq div{padding:10px 14px;background:#020810;border:1px solid var(--line)}
+.faq b{font-family:var(--disp);font-size:14px;display:block;margin-bottom:3px;color:var(--orange)}
+.faq span{font-size:13px;line-height:1.5}
+.foot{width:min(1080px,100%);margin:0 auto;padding:0 var(--pad) 40px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+@media (max-width:820px){
+  .shell{grid-template-columns:minmax(0,1fr);gap:16px;padding-top:18px}
+  main{min-width:0}
+  .side{position:static;flex-direction:row;overflow-x:auto;gap:4px;padding-bottom:6px;scrollbar-width:none;max-width:100%}
+  .side .kick{display:none}
+  .side a{white-space:nowrap;font-size:12px;padding:5px 10px;border:1px solid var(--line);border-left:1px solid var(--line)}
+  .row{grid-template-columns:1fr;gap:3px}
+  .top nav .btn span{display:none}
+  .brand span{display:none}
+  .ca{width:100%}
+}
+.btn[data-link="x"] svg{width:16px;height:16px}
+</style>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="/"><img src="assets/favicon.png" alt="" /><span data-name>Warm GPU</span><small>docs</small></a>
+  <nav>
+    <a class="btn" href="/"><span>Cam 07</span></a>
+    <a class="btn buy" data-link="pons" href="https://www.ponsfamily.com/launchpad"><span>Buy</span><svg><use href="#i-pons"/></svg></a>
+    <a class="btn" data-link="x" href="https://x.com" aria-label="X"><svg><use href="#i-x"/></svg></a>
+    <span class="btn crumb">Docs</span>
+  </nav>
+</header>
+
+<div class="shell">
+  <aside class="side">
+    <span class="kick">Runbook</span>
+    <a href="#what" class="on">What is this</a>
+    <a href="#incident">The incident</a>
+    <a href="#log">Ticket log</a>
+    <a href="#site">Using the site</a>
+    <a href="#token">Token</a>
+    <a href="#local">Nothing is stored</a>
+    <a href="#faq">FAQ</a>
+  </aside>
+
+  <main>
+    <div class="hero">
+      <h1>Warm <em>GPU</em> runbook</h1>
+      <p>Why every model in the world is slow
+Written by the night shift, rack 07</p>
+    </div>
+
+    <section id="what" class="sec">
+      <h2><i>01 · OVERVIEW</i>What is <span data-name>Warm GPU</span></h2>
+      <p>A grey cat found asleep on a GPU tray in a data center. The tray is warm, the cat is heavy, the fans are blocked and the temperature has been rising since the night shift started. Every rack they check has one.</p>
+      <p>The site is the camera feed from rack 07 with the monitoring panel on top. Photoreal, cold blue aisle, warm orange glow, one cat.</p>
+      <div class="rows">
+        <dl class="row"><dt>Character</dt><dd>A chunky grey British Shorthair, asleep, ear moves when the flashlight hits it</dd></dl>
+        <dl class="row"><dt>Place</dt><dd>A hyperscale data center at night, rack 07, tray 03</dd></dl>
+        <dl class="row"><dt>The format</dt><dd>A live camera with three views and a temperature readout that never settles</dd></dl>
+        <dl class="row"><dt>Chain</dt><dd>Robinhood Chain, token through the Pons launchpad</dd></dl>
+      </div>
+    </section>
+
+    <section id="incident" class="sec">
+      <h2><i>02 · THE INCIDENT</i>Rack 07, tray 03</h2>
+      <div class="tree"><b>status</b>
+├── GPU temp        rising from 41, throttles at 96, drops when the cat rolls over
+├── utilisation     zero percent, the job queue is waiting on the tray
+├── fans            blocked by a belly
+├── cause           cat
+└── fix             none. the technician looked at it for an hour and left it warm</div>
+    </section>
+
+    <section id="log" class="sec">
+      <h2><i>03 · TICKETS</i>Ticket log</h2>
+      <div class="tree"><b>closed tickets</b>
+├── 0412   three trays, three cats, cluster throughput unchanged
+├── 0417   the console is taken, graph went up, nobody could type
+├── 0420   technician dispatched, looked at it, left it warm
+└── 0423   thermal confirms, hottest object in the building, purring</div>
+    </section>
+
+    <section id="site" class="sec">
+      <h2><i>04 · CONTROLS</i>Using the site</h2>
+      <div class="rows">
+        <dl class="row"><dt>Views</dt><dd>AISLE, THERMAL and TECHNICIAN in the bottom left switch the camera. <span class="kbd">1</span> <span class="kbd">2</span> <span class="kbd">3</span> on the keyboard do the same</dd></dl>
+        <dl class="row"><dt>Temperature</dt><dd>The panel on the right climbs on its own, throttles, and drops when the cat moves. It is a loop, so is the cat</dd></dl>
+        <dl class="row"><dt>Wake the cat</dt><dd>The button in the bottom right. It has never worked, it reports what happened instead</dd></dl>
+        <dl class="row"><dt>Sound</dt><dd>Quiet until you tap. Your first click anywhere starts a soft ambient loop</dd></dl>
+        <dl class="row"><dt>Incident log</dt><dd>Four tickets below the camera, click one to open it big, <span class="kbd">ESC</span> to close</dd></dl>
+        <dl class="row"><dt>Bottom</dt><dd>The contract with a copy button, BUY, X and this page</dd></dl>
+      </div>
+    </section>
+
+    <section id="token" class="sec">
+      <h2><i>05 · TOKEN</i>Token</h2>
+      <p>The token launches on Robinhood Chain through the Pons launchpad. The contract goes into the block at the bottom of the camera page and here. Until then both say soon and the copy button says not yet.</p>
+      <div class="ca" id="ca"><small>CONTRACT</small><b id="caVal">soon</b><button class="copy" id="caCopy">COPY</button></div>
+      <div class="links">
+        <a class="btn buy" data-link="pons" href="https://www.ponsfamily.com/launchpad">Buy on Pons<svg><use href="#i-pons"/></svg></a>
+        <a class="btn" data-link="x" href="https://x.com" aria-label="X"><svg><use href="#i-x"/></svg></a>
+      </div>
+      <div class="rows">
+        <dl class="row"><dt>Chain</dt><dd>Robinhood Chain, EVM, addresses start with 0x</dd></dl>
+        <dl class="row"><dt>Launchpad</dt><dd>Pons, ponsfamily.com. Buy opens the launchpad, and the token page once the address is in</dd></dl>
+        <dl class="row"><dt>Chart</dt><dd>DexScreener on Robinhood Chain once the token is live</dd></dl>
+      </div>
+    </section>
+
+    <section id="local" class="sec">
+      <h2><i>06 · PRIVACY</i>Nothing is stored</h2>
+      <p>No backend, no account, no cookies, nothing written to your browser. The temperature is a number in the page, the camera is a loop, the cat is asleep.</p>
+      <div class="rows">
+        <dl class="row"><dt>Music</dt><dd>One CC0 ambient loop from OpenGameArt, plays after your first tap</dd></dl>
+        <dl class="row"><dt>Reduced motion</dt><dd>If your system asks for it, the boot sequence, the blinking and the flashes stop, the views still switch</dd></dl>
+        <dl class="row"><dt>Affiliation</dt><dd>None. Not a chip maker, not a cloud, not a cat</dd></dl>
+      </div>
+    </section>
+
+    <section id="faq" class="sec">
+      <h2><i>07 · FAQ</i>Questions</h2>
+      <div class="faq">
+        <div><b>Is that why my model is slow</b><span>Yes. Every GPU has a cat on it, the cats are not coordinated, the slowness is</span></div>
+        <div><b>Can you move the cat</b><span>The technician tried. Ticket 0420 is closed</span></div>
+        <div><b>Why is the tray pulled out</b><span>It was pulled out to check the fans. The cat arrived before the check</span></div>
+        <div><b>Why grey</b><span>Grey matches the racks. It is the only reason nobody noticed for a week</span></div>
+        <div><b>What happens at launch</b><span>The contract goes into the block, the buy button starts pointing at the token page, the temperature keeps rising</span></div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<footer class="foot"><span data-name>Warm GPU</span><span>Robinhood Chain · Pons · rack 07 · tray 03</span></footer>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-pons" viewBox="0 0 64 64"><path d="M14 8h24c11 0 18 7 18 17s-7 17-18 17h-9v12a3 3 0 0 1-3 3H17a3 3 0 0 1-3-3V11a3 3 0 0 1 3-3z" fill="currentColor"/><path d="M29 20h8c4 0 6.5 2 6.5 5s-2.5 5-6.5 5h-8z" fill="#fff" opacity=".9"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path fill="currentColor" d="M18.9 2H22l-7.1 8.1L23 22h-6.6l-5.2-6.8L5.3 22H2.1l7.6-8.7L1.5 2h6.7l4.7 6.2L18.9 2zm-1.1 18h1.8L7.3 3.9H5.4L17.8 20z"/></symbol>
+</svg>
+
+<script>
+(function(){
+  var S = window.SITE, CA = (S.CA||"SOON").trim(), HAS_CA = CA !== "SOON" && CA !== "";
+  document.querySelectorAll('[data-name]').forEach(function(e){ e.textContent = S.NAME; });
+  document.title = S.NAME + ' Docs';
+  document.querySelectorAll('[data-link="pons"]').forEach(function(a){ a.href = HAS_CA ? window.PONS_HOME + '/' + CA : window.PONS_HOME; a.target='_blank'; a.rel='noopener'; });
+  document.querySelectorAll('[data-link="x"]').forEach(function(a){ a.href = S.X_URL || 'https://x.com'; a.target='_blank'; a.rel='noopener'; });
+  var caBox = document.getElementById('ca'), caVal = document.getElementById('caVal'), caCopy = document.getElementById('caCopy');
+  caVal.textContent = HAS_CA ? CA : 'soon';
+  if(HAS_CA){ caBox.classList.add('live'); caBox.title = CA; }
+  caBox.addEventListener('click', function(){ var old = caCopy.textContent; if(HAS_CA){ if(navigator.clipboard) navigator.clipboard.writeText(CA); caCopy.textContent = 'COPIED'; } else { caCopy.textContent = 'NOT YET'; } setTimeout(function(){ caCopy.textContent = old; }, 1100); });
+  var links = [].slice.call(document.querySelectorAll('.side a')), secs = links.map(function(a){ return document.querySelector(a.getAttribute('href')); });
+  function spy(){ var y = window.scrollY + 120, cur = 0; secs.forEach(function(s, i){ if(s && s.offsetTop <= y) cur = i; }); links.forEach(function(a, i){ a.classList.toggle('on', i === cur); }); }
+  addEventListener('scroll', spy, { passive: true }); spy();
+})();
+</script>
+</body>
+</html>
