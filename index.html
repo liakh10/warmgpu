@@ -139,6 +139,8 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   .toast{bottom:calc(var(--pad) + 100px)}
 }
 @media (prefers-reduced-motion:reduce){*{animation:none !important;transition:none !important}.boot{display:none}}
+
+.pmark{width:15px;height:15px;min-width:15px;object-fit:contain;display:inline-block;border:0 !important;border-radius:0 !important}
 </style>
 </head>
 <body>
@@ -152,7 +154,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 
   <div class="hud tl"><span class="rec"><i></i>Live</span></div>
   <nav class="hud tr">
-    <a class="chip buy" data-link="pons" href="https://www.ponsfamily.com/launchpad"><span>Buy</span><svg><use href="#i-pons"/></svg></a>
+    <a class="chip buy" data-link="pons" href="https://www.ponsfamily.com/launchpad"><span>Buy</span><img class="pmark" src="assets/pons-mark.png" alt="" /></a>
     <a class="chip" data-link="x" href="https://x.com" aria-label="X"><svg><use href="#i-x"/></svg></a>
     <a class="chip" href="/docs"><span>Docs</span></a>
   </nav>
@@ -195,7 +197,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   <div class="sign">
     <div class="ca" id="ca"><span class="tag">CONTRACT</span><b class="ca-val" id="caVal">soon</b><button class="cp" id="caCopy">[ COPY ]</button></div>
     <div class="btns">
-      <a class="chip buy" data-link="pons" href="https://www.ponsfamily.com/launchpad">Buy on Pons<svg><use href="#i-pons"/></svg></a>
+      <a class="chip buy" data-link="pons" href="https://www.ponsfamily.com/launchpad">Buy on Pons<img class="pmark" src="assets/pons-mark.png" alt="" /></a>
       <a class="chip" data-link="x" href="https://x.com" aria-label="X"><svg><use href="#i-x"/></svg></a>
       <a class="chip" href="/docs">Docs</a>
     </div>
